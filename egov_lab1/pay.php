@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      *{
+        font-family: 'Courier New', Courier, monospace;
+      }
+        a{
+            color:black;
+            background-color: skyblue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        body{
+            background:white;
+        }
+        table,th,td{
+            border:1px solid black;
+        }
+        td{
+  text-align: left;
+        }
+        .d1{
+            width:120px;
+            background: white;
+            color:black;
+        }
+        legend{
+      background: lightblue;
+      padding:35px;
+    }
+    .a1{
+      padding:10px;
+    }
+    </style>
+</head>
+<body>
+<legend class="ml-3"><a class="a1" href="form.php">Customer Entry</a>  
+    <a class="a1" href="cus_bill.php">Bill Entry</a>
+    <a class="a1" href="bill_payment.php">payment Entry</a>
+    <a class="a1" href="view_customer.php">Cutomer Details</a>
+    <a class="a1" href="view_bill.php">Bill Details</a>
+    <a class="a1" href="pay.php">Payment Details</a>
+  </legend>
+</body>
+</html>
+<?php
+$server="localhost";
+$user="root";
+$password="root";
+$db="db_nea_bill"; 
+$con=mysqli_connect($server,$user,$password,$db);
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  
+  $sql = "SELECT pay_id,bill_amount,discount_amount,penalty,payment_amount,payment_m_name from payment b,payment_method p where b.payment_id=p.payment_id ";
+  $result=mysqli_query($con, $sql) ;
+  echo "<h1>Bill Details:</h1>\n";
+  echo"<table>
+  <tr>
+    <td><div class='d1'>Bill ID</div></td>
+    <td><div class='d1'>Bill Amount</div></td>
+    <td><div class='d1'>Discount</div></td>
+    <td><div class='d1'>Penalty</div></td>
+    <td><div class='d1'>Amount</div></td>
+    <td><div class='d1'>Payment Method</div></td>
+    </tr>
+    </table>";
+  while($row=mysqli_fetch_assoc($result))
+  {
+    echo"<table>
+    <tr>
+    <td> <div class='d1'>$row[pay_id] </div></td>
+    <td><div class='d1'>$row[bill_amount]</div></td>
+    <td><div class='d1'>$row[discount_amount]</div></td>
+    <td><div class='d1'>$row[penalty]</div></td>
+    <td><div class='d1'>$row[payment_amount]</div></td>
+    <td><div class='d1'>$row[payment_m_name]</div></td>
+    </tr>
+    </table>";
+  }
+?>
